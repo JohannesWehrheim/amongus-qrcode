@@ -1,0 +1,9 @@
+{
+  "name": "Knotenpunkt Scanner",
+  "short_name": "Scanner",
+  "start_url": "index.html",
+  "display": "fullscreen",
+  "background_color": "#1a1a1a",
+  "theme_color": "#4a4a4a",
+  "orientation": "landscape"
+}
