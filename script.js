@@ -34,15 +34,13 @@ function closeMap() {
     document.getElementById('map-modal').classList.add('hidden');
 }
 
-// 3. Kamera Logik optimiert für iPad
+// 3. Kamera Logik
 try {
     const html5QrCode = new Html5Qrcode("reader");
-    
     const config = { 
         fps: 10,
-        aspectRatio: 1.333334, // Zwingt den Scanner ins iPad 4:3 Format
+        aspectRatio: 1.333334,
         qrbox: function(viewfinderWidth, viewfinderHeight) {
-            // Macht das Quadrat dynamisch (60% der Bildschirmhöhe)
             let minEdgeSizeThreshold = Math.min(viewfinderWidth, viewfinderHeight);
             let qrboxSize = Math.floor(minEdgeSizeThreshold * 0.6);
             return { width: qrboxSize, height: qrboxSize };
@@ -62,12 +60,9 @@ try {
 }
 
 function onScanSuccess(decodedText, decodedResult) {
-    // Sicherheits-Check: Entfernt Leerzeichen und repariert Groß-/Kleinschreibung
-    // Aus "alpha " oder "ALPHA" wird sauber "Alpha"
     let cleanText = decodedText.trim();
     cleanText = cleanText.charAt(0).toUpperCase() + cleanText.slice(1).toLowerCase();
 
-    // Ton abspielen zur Bestätigung (optional, aber cool für Feedback)
     if (keys.includes(cleanText) && !scannedKeys.includes(cleanText)) {
         scannedKeys.push(cleanText);
         localStorage.setItem('scannedKeys', JSON.stringify(scannedKeys));
@@ -98,4 +93,12 @@ function resetGame() {
         }
         clickCount = 0;
     }
+}
+
+// 6. NEU: Anleitung öffnen/schließen
+function openInstructions() {
+    document.getElementById('instruction-modal').classList.remove('hidden');
+}
+function closeInstructions() {
+    document.getElementById('instruction-modal').classList.add('hidden');
 }
