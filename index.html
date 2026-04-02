@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Knotenpunkt-Scanner</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div id="secret-reset" onclick="resetGame()"></div>
+
+    <div class="main-container">
+        <div class="scanner-wrapper">
+            <div id="reader"></div>
+            <div class="scanner-overlay">ZIELERFASSUNG AKTIV</div>
+        </div>
+
+        <div class="status-bar" id="status-bar">
+            </div>
+    </div>
+
+    <div id="map-modal" class="modal hidden">
+        <div class="modal-header">
+            <span id="modal-title">MAP INFO</span>
+            <button class="close-btn" onclick="closeMap()">X</button>
+        </div>
+        <div class="modal-body">
+            <img id="map-image" src="" alt="Map">
+        </div>
+    </div>
+
+    <div id="win-modal" class="win-modal hidden">
+        <h1 class="win-title">TASK COMPLETED</h1>
+        <p class="win-subtitle">Alle Knotenpunkte online.</p>
+    </div>
+
+    <script src="html5-qrcode.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Service Worker registrieren (für Offline-Modus)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
+</body>
+</html>
