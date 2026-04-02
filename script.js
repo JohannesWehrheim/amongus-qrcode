@@ -82,20 +82,7 @@ function checkWinCondition() {
     }
 }
 
-// 5. Secret Reset (Versteckter Button oben links)
-let clickCount = 0;
-function resetGame() {
-    clickCount++;
-    if (clickCount >= 3) {
-        if(confirm("Spiel wirklich zurücksetzen?")) {
-            localStorage.clear();
-            location.reload();
-        }
-        clickCount = 0;
-    }
-}
-
-// 6. Anleitung öffnen/schließen
+// 5. Anleitung öffnen/schließen
 function openInstructions() {
     document.getElementById('instruction-modal').classList.remove('hidden');
 }
@@ -103,8 +90,24 @@ function closeInstructions() {
     document.getElementById('instruction-modal').classList.add('hidden');
 }
 
-// 7. NEU: System Neustart nach dem Sieg
+// 6. NEU: Admin Menü Logik
+function openAdmin() {
+    document.getElementById('admin-modal').classList.remove('hidden');
+}
+function closeAdmin() {
+    document.getElementById('admin-modal').classList.add('hidden');
+}
+
+// 7. System Neustart (nach Sieg oder manuellem Abbruch)
 function rebootSystem() {
     localStorage.clear();
     location.reload();
+}
+
+// 8. NEU: Manueller Abbruch aus dem Admin-Menü mit Sicherheitsabfrage
+function forceReset() {
+    if(confirm("ACHTUNG: Willst du das Spiel wirklich abbrechen? Alle Codes werden gelöscht!")) {
+        localStorage.clear();
+        location.reload();
+    }
 }
