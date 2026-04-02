@@ -26,7 +26,8 @@ function renderButtons() {
 // 2. Map Logik
 function openMap(key) {
     document.getElementById('modal-title').innerText = `NODE ${key.toUpperCase()}`;
-    document.getElementById('map-image').src = `images/map-${key.toLowerCase()}.jpg`;
+    // HIER WURDE DAS DATEIFORMAT AUF .png GEÄNDERT
+    document.getElementById('map-image').src = `images/map-${key.toLowerCase()}.png`;
     document.getElementById('map-modal').classList.remove('hidden');
 }
 
@@ -95,7 +96,7 @@ function resetGame() {
     }
 }
 
-// 6. NEU: Anleitung öffnen/schließen
+// 6. Anleitung öffnen/schließen
 function openInstructions() {
     document.getElementById('instruction-modal').classList.remove('hidden');
 }
