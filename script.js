@@ -90,7 +90,7 @@ function closeInstructions() {
     document.getElementById('instruction-modal').classList.add('hidden');
 }
 
-// 6. NEU: Admin Menü Logik
+// 6. Admin Menü Logik
 function openAdmin() {
     document.getElementById('admin-modal').classList.remove('hidden');
 }
@@ -98,13 +98,15 @@ function closeAdmin() {
     document.getElementById('admin-modal').classList.add('hidden');
 }
 
-// 7. System Neustart (nach Sieg oder manuellem Abbruch)
+// 7. System Neustart (nach Sieg mit Sicherheitsabfrage)
 function rebootSystem() {
-    localStorage.clear();
-    location.reload();
+    if(confirm("SYSTEM-WARNUNG: Nur für Administratoren!\n\nSoll das System wirklich für die nächste Runde zurückgesetzt werden? Bitte erst bestätigen, wenn das aktuelle Spiel komplett beendet ist!")) {
+        localStorage.clear();
+        location.reload();
+    }
 }
 
-// 8. NEU: Manueller Abbruch aus dem Admin-Menü mit Sicherheitsabfrage
+// 8. Manueller Abbruch aus dem Admin-Menü mit Sicherheitsabfrage
 function forceReset() {
     if(confirm("ACHTUNG: Willst du das Spiel wirklich abbrechen? Alle Codes werden gelöscht!")) {
         localStorage.clear();
