@@ -1,0 +1,86 @@
+/* Grundlegendes Setup */
+* { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+body { 
+    background-color: #1a1a1a; 
+    font-family: 'Courier New', Courier, monospace; /* Typischer Terminal-Font */
+    width: 100vw; height: 100vh; overflow: hidden;
+    display: flex; flex-direction: column;
+}
+
+/* Versteckter Reset Button */
+#secret-reset {
+    position: absolute; top: 0; left: 0; width: 50px; height: 50px;
+    z-index: 999; background: transparent; cursor: default;
+}
+
+/* Hauptlayout */
+.main-container {
+    display: flex; flex-direction: column; height: 100%; width: 100%; padding: 20px;
+}
+
+/* Scanner Bereich */
+.scanner-wrapper {
+    flex-grow: 1; border: 8px solid #000; border-radius: 20px;
+    background: #4a4a4a; position: relative; overflow: hidden;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+}
+#reader { width: 100%; height: 100%; }
+.scanner-overlay {
+    position: absolute; bottom: 10px; width: 100%; text-align: center;
+    color: #ff3333; font-weight: bold; font-size: 24px; text-shadow: 2px 2px #000;
+    pointer-events: none;
+}
+
+/* Statusleiste */
+.status-bar {
+    height: 120px; display: flex; justify-content: space-between; gap: 15px;
+    margin-top: 20px;
+}
+
+/* Einzelne Buttons */
+.task-btn {
+    flex: 1; background-color: #8c8c8c; border: 6px solid #000; border-radius: 15px;
+    font-size: 20px; font-weight: bold; display: flex; align-items: center; 
+    justify-content: center; cursor: pointer; text-transform: uppercase;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.5); transition: background-color 0.2s;
+}
+.task-btn.completed {
+    background-color: #39FF14; /* Neon-Grün */
+    color: #000; border-color: #000; box-shadow: 0 0 15px #39FF14;
+}
+
+/* Modals (Popups) - Among Us Fenster Style */
+.modal {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 80%; height: 80%; background: #d9d9d9;
+    border: 8px solid #000; border-radius: 20px; z-index: 100;
+    display: flex; flex-direction: column; box-shadow: 10px 10px 0px rgba(0,0,0,0.7);
+}
+.hidden { display: none !important; }
+
+.modal-header {
+    background: #8c8c8c; border-bottom: 6px solid #000; border-radius: 12px 12px 0 0;
+    padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+    font-size: 28px; font-weight: bold;
+}
+.close-btn {
+    background: #ff0000; color: white; border: 4px solid #000; border-radius: 10px;
+    width: 50px; height: 50px; font-size: 24px; font-weight: bold; cursor: pointer;
+}
+.modal-body {
+    flex-grow: 1; padding: 20px; display: flex; justify-content: center; align-items: center;
+    background: #1a1a1a; border-radius: 0 0 12px 12px;
+}
+#map-image { max-width: 100%; max-height: 100%; border: 4px solid #000; }
+
+/* Finale Win Modal */
+.win-modal {
+    position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.9); z-index: 200;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+}
+.win-title {
+    color: #39FF14; font-size: 80px; font-weight: bold; text-shadow: 0 0 30px #39FF14;
+    border: 8px solid #39FF14; padding: 30px 60px; border-radius: 20px; text-align: center;
+}
+.win-subtitle { color: #fff; font-size: 30px; margin-top: 20px; }
