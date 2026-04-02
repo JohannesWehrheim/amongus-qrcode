@@ -9,21 +9,25 @@ body {
     display: flex; flex-direction: column;
 }
 
-/* NEU: Unauffälliger Admin-Button */
+/* NEU: Unauffälliger Admin-Button (Besser positioniert und sichtbar, aber dezent) */
 #admin-btn {
     position: absolute; 
-    top: 5px; 
-    right: 5px; 
-    background: transparent; 
-    border: none; 
-    color: #2a3b40; /* Sehr dunkles Grau-Blau, fast unsichtbar auf dem Hintergrund */
+    top: 25px; /* Etwas weiter runter, weg vom Rand */
+    right: 25px; /* Weiter nach innen */
+    background: rgba(21, 30, 32, 0.9); /* Gleiche Farbe wie Hintergrund, nur leicht abgesetzt */
+    border: 1px solid #3a5054; /* Sehr dezenter Rahmen */
+    border-radius: 6px;
+    color: #5c7a7d; /* Abgedunkeltes Blaugrau, fällt kaum auf */
+    padding: 6px 12px;
     font-family: 'Courier New', Courier, monospace;
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
     z-index: 999;
+    transition: all 0.2s;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
-#admin-btn:active { color: #ff3333; }
+#admin-btn:active { color: #ff3333; border-color: #ff3333; }
 
 /* Hauptlayout */
 .main-container {
