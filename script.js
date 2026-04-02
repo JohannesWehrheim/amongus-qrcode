@@ -96,7 +96,7 @@ function resetGame() {
     }
 }
 
-// 6. Anleitung öffnen/schließen
+// 6. NEU: Anleitung öffnen/schließen
 function openInstructions() {
     document.getElementById('instruction-modal').classList.remove('hidden');
 }
