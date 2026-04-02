@@ -1,7 +1,7 @@
 const keys = ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta'];
 let scannedKeys = JSON.parse(localStorage.getItem('scannedKeys')) || [];
 
-// 1. ZUERST die Buttons generieren (damit sie immer da sind, auch bei Kamera-Fehlern)
+// 1. ZUERST die Buttons generieren
 renderButtons();
 
 function renderButtons() {
@@ -34,15 +34,24 @@ function closeMap() {
     document.getElementById('map-modal').classList.add('hidden');
 }
 
-// 3. Kamera Logik mit Fehler-Schutz (Try-Catch)
+// 3. Kamera Logik optimiert für iPad
 try {
     const html5QrCode = new Html5Qrcode("reader");
-    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+    
+    const config = { 
+        fps: 10,
+        aspectRatio: 1.333334, // Zwingt den Scanner ins iPad 4:3 Format
+        qrbox: function(viewfinderWidth, viewfinderHeight) {
+            // Macht das Quadrat dynamisch (60% der Bildschirmhöhe)
+            let minEdgeSizeThreshold = Math.min(viewfinderWidth, viewfinderHeight);
+            let qrboxSize = Math.floor(minEdgeSizeThreshold * 0.6);
+            return { width: qrboxSize, height: qrboxSize };
+        }
+    };
 
     html5QrCode.start({ facingMode: "user" }, config, onScanSuccess, onScanFailure)
     .catch(err => {
         console.log("Kamera-Start fehlgeschlagen:", err);
-        // Fallback Button, falls Apple die Kamera blockiert
         document.getElementById('reader').innerHTML = `
             <div style="display:flex; height:100%; justify-content:center; align-items:center;">
                 <button onclick="location.reload()" style="padding: 20px; font-size: 20px; background: red; color: white; border: 4px solid black;">Kamera blockiert? Seite neu laden und Zugriff erlauben!</button>
@@ -50,12 +59,17 @@ try {
     });
 } catch (error) {
     console.error("QR Bibliothek nicht gefunden!", error);
-    document.getElementById('reader').innerHTML = '<h2 style="color:red; text-align:center; margin-top:20px;">Systemfehler: html5-qrcode.min.js fehlt auf GitHub!</h2>';
 }
 
 function onScanSuccess(decodedText, decodedResult) {
-    if (keys.includes(decodedText) && !scannedKeys.includes(decodedText)) {
-        scannedKeys.push(decodedText);
+    // Sicherheits-Check: Entfernt Leerzeichen und repariert Groß-/Kleinschreibung
+    // Aus "alpha " oder "ALPHA" wird sauber "Alpha"
+    let cleanText = decodedText.trim();
+    cleanText = cleanText.charAt(0).toUpperCase() + cleanText.slice(1).toLowerCase();
+
+    // Ton abspielen zur Bestätigung (optional, aber cool für Feedback)
+    if (keys.includes(cleanText) && !scannedKeys.includes(cleanText)) {
+        scannedKeys.push(cleanText);
         localStorage.setItem('scannedKeys', JSON.stringify(scannedKeys));
         renderButtons();
         closeMap();
@@ -63,7 +77,7 @@ function onScanSuccess(decodedText, decodedResult) {
 }
 
 function onScanFailure(error) {
-    // Ignorieren, passiert jeden Frame in dem kein Code sichtbar ist
+    // Ignorieren
 }
 
 // 4. Gewinn-Check
@@ -73,7 +87,7 @@ function checkWinCondition() {
     }
 }
 
-// 5. Secret Reset (Für den Admin: Oben links versteckt)
+// 5. Secret Reset 
 let clickCount = 0;
 function resetGame() {
     clickCount++;
