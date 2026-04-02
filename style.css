@@ -104,6 +104,162 @@ body {
     box-shadow: 0 0 20px rgba(91, 224, 179, 0.6);
 }
 
+/* Modals (Die Fenster) - ÄNDERUNG: Jetzt nahezu Vollbild */
+.modal {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 95%; /* Fast der ganze Bildschirm in der Breite */
+    height: 94dvh; /* Fast der ganze Bildschirm in der Höhe */
+    background: #c0c0c0; 
+    border: 6px solid #5be0b3; 
+    border-radius: 12px; z-index: 100;
+    display: flex; flex-direction: column; 
+    box-shadow: 0 0 40px rgba(0,0,0,0.9), 0 0 20px rgba(91, 224, 179, 0.4);
+    overflow: hidden;
+}
+.hidden { display: none !important; }
+
+/* Titel-Leiste der Modals */
+.modal-header {
+    background: #808080; 
+    border-bottom: 4px solid #404040; 
+    border-radius: 6px 6px 0 0;
+    padding: 10px 20px; 
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 26px; /* Etwas größer für das große Fenster */
+    font-weight: bold; color: #1a1a1a;
+    text-shadow: 1px 1px #e0e0e0;
+    height: 60px; 
+}
+
+/* Roter Schließen-Button */
+.close-btn {
+    background: #ff3333; 
+    color: white; 
+    border: 3px solid #404040; 
+    border-radius: 6px;
+    width: 45px; height: 45px; 
+    font-size: 22px; 
+    font-weight: bold; 
+    cursor: pointer;
+    box-shadow: inset -2px -2px 0px rgba(0,0,0,0.3);
+}
+
+/* Das Fenster-Innere */
+.modal-body {
+    flex-grow: 1; padding: 15px; 
+    display: flex; justify-content: center; align-items: center;
+    background: #1a1a1a; 
+    border-radius: 0 0 6px 6px;
+    overflow: hidden; 
+    height: 100%; 
+}
+
+/* Das Karten-Bild */
+#map-image { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: contain; 
+    border: 3px solid #808080; 
+    box-sizing: border-box; 
+}
+
+/* Spezielles Styling NUR für den Anleitungstext */
+.text-body {
+    align-items: flex-start; justify-content: flex-start;
+    padding: 30px 40px; /* Mehr Rand für gute Lesbarkeit */
+    color: #5be0b3;
+    overflow-y: auto; 
+}
+.instruction-content { width: 100%; }
+
+/* ÄNDERUNG: Schriften deutlich größer und präsenter gemacht */
+.instruction-content h2 {
+    color: #ffaa00; margin-bottom: 25px; font-size: 28px;
+    border-bottom: 2px solid #ffaa00; padding-bottom: 12px;
+}
+.instruction-content p { font-size: 22px; margin-bottom: 20px; line-height: 1.6; }
+
+/* Finale Win Modal */
+.win-modal {
+    position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(10, 15, 16, 0.95); z-index: 200;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+}
+.win-title {
+    color: #5be0b3; font-size: 70px; font-weight: bold; text-shadow: 0 0 40px #5be0b3;
+    border: 6px solid #5be0b3; padding: 40px 80px; border-radius: 15px; text-align: center;
+    background: rgba(91, 224, 179, 0.1);
+}
+.win-subtitle { color: #fff; font-size: 28px; margin-top: 25px; letter-spacing: 2px;}#reader { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; }
+#reader video { 
+    object-fit: cover !important; 
+    width: 100% !important; 
+    height: 100% !important; 
+    transform: scaleX(-1); 
+}
+
+/* Fadenkreuz & Overlay */
+.scanner-overlay {
+    position: absolute; bottom: 15px; width: 100%; text-align: center;
+    color: #5be0b3; font-weight: bold; font-size: 24px; 
+    text-shadow: 0 0 8px #5be0b3, 2px 2px 0px #000;
+    pointer-events: none; z-index: 10;
+    letter-spacing: 2px;
+}
+
+/* Anleitungs-Button */
+.instruction-btn {
+    align-self: center; 
+    width: auto; 
+    padding: 12px 40px; 
+    background-color: #1e2b2e;
+    color: #ffaa00; 
+    border: 3px dashed #ffaa00;
+    border-radius: 8px;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    cursor: pointer;
+    text-shadow: 0 0 5px rgba(255, 170, 0, 0.5);
+    box-shadow: 0 0 10px rgba(255, 170, 0, 0.2);
+    transition: all 0.2s;
+}
+.instruction-btn:active { background-color: #ffaa00; color: #1e2b2e; }
+
+/* Statusleiste Unten */
+.status-bar {
+    display: flex; 
+    justify-content: space-between; 
+    flex-wrap: nowrap; 
+    gap: 8px; 
+    padding-bottom: 5px; 
+}
+
+/* Einzelne Aufgaben-Buttons */
+.task-btn {
+    flex: 1; 
+    height: 60px; 
+    background-color: #1e2b2e; 
+    color: #5be0b3; 
+    border: 3px solid #5be0b3; 
+    border-radius: 8px;
+    font-size: 16px; 
+    font-weight: bold; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer; 
+    text-transform: uppercase;
+    box-shadow: 0 0 10px rgba(91, 224, 179, 0.2); 
+    transition: all 0.2s ease-in-out;
+}
+.task-btn.completed {
+    background-color: #5be0b3; 
+    color: #0a0f10; 
+    border-color: #5be0b3; 
+    box-shadow: 0 0 20px rgba(91, 224, 179, 0.6);
+}
+
 /* Modals (Die Fenster) */
 .modal {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
