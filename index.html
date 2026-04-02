@@ -40,6 +40,7 @@
         <div class="modal-body text-body">
             <div class="instruction-content">
                 <h2>PROTOKOLL: KNOTENPUNKTE REAKTIVIEREN</h2>
+                <p><strong>MISSION:</strong> Jeder der 7 Besatzungsmitglieder muss seine persönliche QR-Code-Plakette finden und scannen. Die Mission ist erst abgeschlossen, wenn alle 7 Codes erfolgreich an diesem Terminal erfasst wurden.</p>
                 <p><strong>1. KARTENDATEN ABRUFEN:</strong> Tippe unten auf einen ungelösten Knotenpunkt (z.B. ALPHA), um dessen vermuteten Standort im Gebäude auf der Karte anzuzeigen.</p>
                 <p><strong>2. OBJEKTE LOKALISIEREN:</strong> Finde die physischen QR-Code-Plaketten, die in den markierten Bereichen versteckt sind.</p>
                 <p><strong>3. DATEN SCANNEN:</strong> Halte den gefundenen QR-Code vor die Kamera dieses Terminals, um den Knotenpunkt zu entschlüsseln. Die Statusanzeige wird grün, sobald der Scan erfolgreich war.</p>
@@ -56,6 +57,7 @@
     <script src="html5-qrcode.min.js"></script>
     <script src="script.js"></script>
     <script>
+        // Service Worker registrieren (für Offline-Modus)
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js');
         }
