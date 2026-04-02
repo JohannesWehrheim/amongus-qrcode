@@ -8,7 +8,7 @@
     <link rel="manifest" href="manifest.json">
 </head>
 <body>
-    <div id="secret-reset" onclick="resetGame()"></div>
+    <button id="admin-btn" onclick="openAdmin()">[ ADMIN ]</button>
 
     <div class="main-container">
         <div class="scanner-wrapper">
@@ -49,6 +49,18 @@
         </div>
     </div>
 
+    <div id="admin-modal" class="modal hidden" style="height: auto; max-height: 60dvh;">
+        <div class="modal-header" style="background: #4a1515; border-bottom-color: #ff3333;">
+            <span style="color: #ff3333;">ADMINISTRATOR ZUGANG</span>
+            <button class="close-btn" onclick="closeAdmin()">X</button>
+        </div>
+        <div class="modal-body text-body" style="flex-direction: column; align-items: center; text-align: center;">
+            <h2 style="color: #ff3333; margin-bottom: 20px;">SYSTEM-OVERRIDE</h2>
+            <p style="color: #fff; font-size: 20px; margin-bottom: 40px;">Möchtest du die aktuelle Runde manuell abbrechen und den gesamten Spielfortschritt löschen?</p>
+            <button class="reboot-btn" style="margin-top: 0;" onclick="forceReset()">[ FORTSCHRITT LÖSCHEN ]</button>
+        </div>
+    </div>
+
     <div id="win-modal" class="win-modal hidden">
         <h1 class="win-title">TASK COMPLETED</h1>
         <p class="win-subtitle">Alle Knotenpunkte online.</p>
@@ -58,7 +70,6 @@
     <script src="html5-qrcode.min.js"></script>
     <script src="script.js"></script>
     <script>
-        // Service Worker registrieren (für Offline-Modus)
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js');
         }
