@@ -1,7 +1,7 @@
 /* Grundlegendes Setup - Medbay Theme */
 * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
 body { 
-    background-color: #151e20; 
+    background-color: #151e20; /* Dunkles Blaugrau aus der Vorlage */
     font-family: 'Courier New', Courier, monospace; 
     width: 100vw; 
     height: 100dvh; 
@@ -22,23 +22,27 @@ body {
     gap: 15px;
 }
 
-/* Scanner Bereich */
+/* Scanner Bereich - Neon Rahmen */
 .scanner-wrapper {
     flex-grow: 1; 
-    border: 4px solid #5be0b3; 
+    border: 4px solid #5be0b3; /* Mintgrün/Cyan leuchtend */
     border-radius: 10px;
     background: #0a0f10; 
     position: relative; overflow: hidden;
     box-shadow: 0 0 15px rgba(91, 224, 179, 0.3), inset 0 0 20px rgba(0,0,0,0.8);
     display: flex; justify-content: center; align-items: center;
 }
+
+/* Verhindert das Quetschen & SPIEGELT DIE KAMERA */
 #reader { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; }
 #reader video { 
     object-fit: cover !important; 
     width: 100% !important; 
     height: 100% !important; 
-    transform: scaleX(-1); 
+    transform: scaleX(-1); /* Hebt die Spiegelung auf! */
 }
+
+/* Fadenkreuz & Overlay */
 .scanner-overlay {
     position: absolute; bottom: 15px; width: 100%; text-align: center;
     color: #5be0b3; font-weight: bold; font-size: 24px; 
@@ -65,7 +69,7 @@ body {
 }
 .instruction-btn:active { background-color: #ffaa00; color: #1e2b2e; }
 
-/* Statusleiste Unten - Jetzt in EINER REIHE */
+/* Statusleiste Unten - Jetzt fix in einer Reihe */
 .status-bar {
     display: flex; 
     justify-content: space-between; 
@@ -74,7 +78,7 @@ body {
     padding-bottom: 5px; 
 }
 
-/* Einzelne Buttons - Passen sich der Breite an */
+/* Einzelne Buttons im Medbay-Design */
 .task-btn {
     flex: 1; /* Alle Buttons sind exakt gleich breit */
     height: 60px; 
@@ -92,6 +96,8 @@ body {
     box-shadow: 0 0 10px rgba(91, 224, 179, 0.2); 
     transition: all 0.2s ease-in-out;
 }
+
+/* Gelöste Aufgabe - Button leuchtet auf */
 .task-btn.completed {
     background-color: #5be0b3; 
     color: #0a0f10; 
@@ -99,50 +105,73 @@ body {
     box-shadow: 0 0 20px rgba(91, 224, 179, 0.6);
 }
 
-/* Modals */
+/* Modals (Die Karten-Fenster) - Angepasst für iPad Air und Safe Areas */
 .modal {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 85%; height: 85%; 
-    background: #c0c0c0; 
-    border: 6px solid #5be0b3; 
+    width: 85%; 
+    height: auto; /* Dynamische Höhe */
+    max-height: 80dvh; /* dvh = dynamische Ansichtshöhe, gut für iOS */
+    background: #c0c0c0; /* Klassisches Computer-Grau */
+    border: 6px solid #5be0b3; /* Tech-Rand außen */
     border-radius: 12px; z-index: 100;
     display: flex; flex-direction: column; 
     box-shadow: 0 0 30px rgba(0,0,0,0.8), 0 0 20px rgba(91, 224, 179, 0.3);
+    overflow: hidden;
 }
 .hidden { display: none !important; }
 
+/* Die Titel-Leiste der Modals */
 .modal-header {
     background: #808080; 
     border-bottom: 4px solid #404040; 
     border-radius: 6px 6px 0 0;
-    padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
-    font-size: 26px; font-weight: bold; color: #1a1a1a;
+    padding: 8px 15px; /* Kompakter */
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 22px; /* Etwas kleiner */
+    font-weight: bold; color: #1a1a1a;
     text-shadow: 1px 1px #e0e0e0;
+    height: 50px; /* Feste Höhe für Header */
 }
+
+/* Der rote Schließen-Button */
 .close-btn {
-    background: #ff3333; color: white; border: 3px solid #404040; 
-    border-radius: 6px; width: 45px; height: 45px; 
-    font-size: 22px; font-weight: bold; cursor: pointer;
+    background: #ff3333; 
+    color: white; 
+    border: 3px solid #404040; 
+    border-radius: 6px;
+    width: 40px; height: 40px; /* Etwas kleiner */
+    font-size: 20px; /* Etwas kleiner */
+    font-weight: bold; 
+    cursor: pointer;
     box-shadow: inset -2px -2px 0px rgba(0,0,0,0.3);
 }
+
+/* Das Fenster-Innere */
 .modal-body {
-    flex-grow: 1; padding: 15px; display: flex; justify-content: center; align-items: center;
-    background: #1a1a1a; 
+    flex-grow: 1; padding: 10px; /* Kompakter */
+    display: flex; justify-content: center; align-items: center;
+    background: #1a1a1a; /* Map-Bereich dunkel für Kontrast */
     border-radius: 0 0 6px 6px;
+    overflow-y: auto; /* Ermöglicht Scrollen im Fenster */
 }
-#map-image { max-width: 100%; max-height: 100%; border: 3px solid #808080; }
+#map-image { 
+    max-width: 100%; max-height: 100%; 
+    border: 3px solid #808080; 
+    object-fit: contain; /* Verhindert Verzerrung */
+}
 
 /* NEU: Styling für den Anleitungstext */
 .text-body {
     align-items: flex-start; justify-content: flex-start;
-    padding: 30px; overflow-y: auto; color: #5be0b3;
+    padding: 20px 25px; /* Mehr Platz */
+    color: #5be0b3;
 }
 .instruction-content { width: 100%; }
 .instruction-content h2 {
-    color: #ffaa00; margin-bottom: 20px; font-size: 24px;
-    border-bottom: 2px solid #ffaa00; padding-bottom: 10px;
+    color: #ffaa00; margin-bottom: 15px; font-size: 22px;
+    border-bottom: 2px solid #ffaa00; padding-bottom: 8px;
 }
-.instruction-content p { font-size: 20px; margin-bottom: 20px; line-height: 1.6; }
+.instruction-content p { font-size: 18px; margin-bottom: 15px; line-height: 1.5; }
 
 /* Finale Win Modal */
 .win-modal {
