@@ -26,7 +26,6 @@ function renderButtons() {
 // 2. Map Logik
 function openMap(key) {
     document.getElementById('modal-title').innerText = `NODE ${key.toUpperCase()}`;
-    // HIER WURDE DAS DATEIFORMAT AUF .png GEÄNDERT
     document.getElementById('map-image').src = `images/map-${key.toLowerCase()}.png`;
     document.getElementById('map-modal').classList.remove('hidden');
 }
@@ -83,7 +82,7 @@ function checkWinCondition() {
     }
 }
 
-// 5. Secret Reset 
+// 5. Secret Reset (Versteckter Button oben links)
 let clickCount = 0;
 function resetGame() {
     clickCount++;
@@ -96,10 +95,16 @@ function resetGame() {
     }
 }
 
-// 6. NEU: Anleitung öffnen/schließen
+// 6. Anleitung öffnen/schließen
 function openInstructions() {
     document.getElementById('instruction-modal').classList.remove('hidden');
 }
 function closeInstructions() {
     document.getElementById('instruction-modal').classList.add('hidden');
+}
+
+// 7. NEU: System Neustart nach dem Sieg
+function rebootSystem() {
+    localStorage.clear();
+    location.reload();
 }
