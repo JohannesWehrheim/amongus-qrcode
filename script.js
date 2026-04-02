@@ -1,9 +1,11 @@
 const keys = ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta'];
 let scannedKeys = JSON.parse(localStorage.getItem('scannedKeys')) || [];
 
-// 1. Buttons generieren
-const statusBar = document.getElementById('status-bar');
+// 1. ZUERST die Buttons generieren (damit sie immer da sind, auch bei Kamera-Fehlern)
+renderButtons();
+
 function renderButtons() {
+    const statusBar = document.getElementById('status-bar');
     statusBar.innerHTML = '';
     keys.forEach(key => {
         const btn = document.createElement('div');
@@ -13,7 +15,6 @@ function renderButtons() {
         }
         btn.innerText = key;
         
-        // Wenn noch nicht erledigt, klick öffnet die Map
         if (!scannedKeys.includes(key)) {
             btn.onclick = () => openMap(key);
         }
@@ -25,7 +26,6 @@ function renderButtons() {
 // 2. Map Logik
 function openMap(key) {
     document.getElementById('modal-title').innerText = `NODE ${key.toUpperCase()}`;
-    // Sucht das Bild z.B. "map-alpha.jpg" im Ordner "images"
     document.getElementById('map-image').src = `images/map-${key.toLowerCase()}.jpg`;
     document.getElementById('map-modal').classList.remove('hidden');
 }
@@ -34,31 +34,41 @@ function closeMap() {
     document.getElementById('map-modal').classList.add('hidden');
 }
 
-// 3. Scanner Logik (Läuft dauerhaft)
-const html5QrCode = new Html5Qrcode("reader");
-const config = { fps: 10, qrbox: { width: 300, height: 300 } };
+// 3. Kamera Logik mit Fehler-Schutz (Try-Catch)
+try {
+    const html5QrCode = new Html5Qrcode("reader");
+    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
 
-// "user" nutzt die Frontkamera des iPads
-html5QrCode.start({ facingMode: "user" }, config, onScanSuccess, onScanFailure)
-.catch(err => console.log("Kamera-Fehler:", err));
+    html5QrCode.start({ facingMode: "user" }, config, onScanSuccess, onScanFailure)
+    .catch(err => {
+        console.log("Kamera-Start fehlgeschlagen:", err);
+        // Fallback Button, falls Apple die Kamera blockiert
+        document.getElementById('reader').innerHTML = `
+            <div style="display:flex; height:100%; justify-content:center; align-items:center;">
+                <button onclick="location.reload()" style="padding: 20px; font-size: 20px; background: red; color: white; border: 4px solid black;">Kamera blockiert? Seite neu laden und Zugriff erlauben!</button>
+            </div>`;
+    });
+} catch (error) {
+    console.error("QR Bibliothek nicht gefunden!", error);
+    document.getElementById('reader').innerHTML = '<h2 style="color:red; text-align:center; margin-top:20px;">Systemfehler: html5-qrcode.min.js fehlt auf GitHub!</h2>';
+}
 
 function onScanSuccess(decodedText, decodedResult) {
-    // Wenn der gescannte Text (z.B. "Alpha") in unserer Liste ist und noch nicht gescannt wurde
     if (keys.includes(decodedText) && !scannedKeys.includes(decodedText)) {
         scannedKeys.push(decodedText);
         localStorage.setItem('scannedKeys', JSON.stringify(scannedKeys));
-        renderButtons(); // Statusleiste aktualisieren
-        closeMap(); // Falls eine Karte offen war, schließen
+        renderButtons();
+        closeMap();
     }
 }
 
 function onScanFailure(error) {
-    // Wird sehr oft aufgerufen, wenn kein Code im Bild ist. Einfach ignorieren.
+    // Ignorieren, passiert jeden Frame in dem kein Code sichtbar ist
 }
 
 // 4. Gewinn-Check
 function checkWinCondition() {
-    if (scannedKeys.length === keys.length) {
+    if (scannedKeys.length === keys.length && keys.length > 0) {
         document.getElementById('win-modal').classList.remove('hidden');
     }
 }
@@ -67,7 +77,7 @@ function checkWinCondition() {
 let clickCount = 0;
 function resetGame() {
     clickCount++;
-    if (clickCount >= 3) { // 3 mal tippen zum Zurücksetzen
+    if (clickCount >= 3) {
         if(confirm("Spiel wirklich zurücksetzen?")) {
             localStorage.clear();
             location.reload();
@@ -75,6 +85,3 @@ function resetGame() {
         clickCount = 0;
     }
 }
-
-// Start
-renderButtons();
